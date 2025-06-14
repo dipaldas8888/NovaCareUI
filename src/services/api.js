@@ -1,25 +1,30 @@
 import axios from "axios";
 
-const API_BASE_URL = "";
+// export const api = axios.create({
+//   baseURL: "http://localhost:8080",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   withCredentials: true,
+// });
 
-const api = axios.create({
-  baseURL: API_BASE_URL,
+export const api = axios.create({
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 5000, // optional: helps catch hangs
 });
 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(

@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { appointmentAPI, doctorAPI, patientAPI } from "../services/api";
 import { useApp } from "../context/AppContext";
+import { useAuth } from "../context/AuthContext";
+import React from "react";
 
 const AppointmentForm = ({ appointment, onSubmit, onCancel }) => {
   const { doctors, patients } = useApp();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+
   const [formData, setFormData] = useState({
     doctorId: appointment?.doctor?.id || "",
     patientId: appointment?.patient?.id || "",
@@ -12,14 +17,42 @@ const AppointmentForm = ({ appointment, onSubmit, onCancel }) => {
       : "",
     notes: appointment?.notes || "",
   });
+  useEffect(() => {
+    if (!user) {
+      setError("Please log in to book appointments");
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const submitData = {
-      ...formData,
-      appointmentDateTime: new Date(formData.appointmentDateTime).toISOString(),
-    };
-    onSubmit(submitData);
+    try {
+      const submitData = {
+        doctorId: formData.doctorId,
+        appointmentDateTime: new Date(
+          formData.appointmentDateTime
+        ).toISOString(),
+        notes: formData.notes,
+      };
+
+      console.log("Submitting appointment data:", submitData);
+
+      const response = await appointmentAPI.create(submitData);
+      console.log("Appointment created successfully:", response.data);
+
+      setFormData({
+        doctorId: "",
+        appointmentDateTime: "",
+        notes: "",
+      });
+
+      onSubmit(response.data);
+    } catch (error) {
+      console.error("Error in form submission:", error);
+      alert("Failed to book appointment. Please try again.");
+    }
   };
 
   const handleChange = (e) => {
@@ -56,26 +89,16 @@ const AppointmentForm = ({ appointment, onSubmit, onCancel }) => {
                 ))}
               </select>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Patient *
-              </label>
-              <select
-                name="patientId"
-                value={formData.patientId}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">Select a patient</option>
-                {patients.map((patient) => (
-                  <option key={patient.id} value={patient.id}>
-                    {patient.name} - {patient.email}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {user && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Patient
+                </label>
+                <div className="px-3 py-2 border border-gray-300 rounded-md bg-gray-50">
+                  {user.name || "Anonymous User"} ({user.email})
+                </div>
+              </div>
+            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -329,6 +352,8 @@ const Appointments = () => {
   const handleSubmit = async (formData) => {
     try {
       setLoading(true);
+      console.log("Submitting appointment data:", formData); // Add this log
+
       if (editingAppointment) {
         await appointmentAPI.update(editingAppointment.id, formData);
       } else {

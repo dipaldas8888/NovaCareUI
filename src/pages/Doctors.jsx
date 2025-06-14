@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { doctorAPI } from "../services/api";
 import { useApp } from "../context/AppContext";
+import { useAuth } from "../context/AuthContext";
+
+import React from "react";
 
 const DoctorCard = ({ doctor }) => {
   return (
@@ -150,7 +153,6 @@ const Doctors = () => {
           </p>
         </div>
 
-        {/* Search and Filter */}
         <div className="mb-8 flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <input

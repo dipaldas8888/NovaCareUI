@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { authAPI } from "../services/api";
+import React from "react";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     usernameOrEmail: "",
     password: "",
@@ -11,7 +15,6 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -28,7 +31,8 @@ const Login = () => {
     const result = await login(formData);
 
     if (result.success) {
-      navigate("/");
+      const from = location.state?.from?.pathname || "/";
+      navigate(from);
     } else {
       setError(result.error);
     }

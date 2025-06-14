@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { authAPI } from "../services/api";
+import React from "react";
 
 const AuthContext = createContext();
 
@@ -15,17 +17,44 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    }
-    setLoading(false);
-  }, [token]);
+    const verifyAuth = async () => {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        try {
+          const response = await axios.get("/api/auth/verify", {
+            headers: {
+              Authorization: `Bearer ${storedToken}`,
+            },
+          });
+          setUser(response.data);
+          setToken(storedToken);
+          console.log("User verified:", response.data);
+          console.log("Token:", storedToken);
+
+          setIsAuthenticated(true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${storedToken}`;
+        } catch (error) {
+          localStorage.removeItem("token");
+          setUser(null);
+          setToken(null);
+          setIsAuthenticated(false);
+          delete axios.defaults.headers.common["Authorization"];
+        }
+      }
+      setLoading(false);
+    };
+
+    verifyAuth();
+  }, []);
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post("/api/auth/login", credentials);
+      const response = await authAPI.login(credentials);
       const { data: token } = response;
 
       setToken(token);
@@ -43,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post("/api/auth/register", userData);
+      const response = await authAPI.register(userData);
       return { success: true, message: response.data };
     } catch (error) {
       return {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { patientAPI } from "../services/api";
 import { useApp } from "../context/AppContext";
+import React from "react";
 
 const PatientForm = ({ patient, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({

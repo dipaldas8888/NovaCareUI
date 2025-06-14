@@ -1,46 +1,95 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import React from "react";
+import hospitalBuilding from "../assets/Hospital.jpg";
+import doctorPatient from "../assets/hospitalImage.jpg";
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
 
   return (
     <div className="min-h-screen">
-      <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
+      {/* Enhanced Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-grid-white/[0.2] bg-[size:20px_20px]"></div>
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/20"></div>
+
+        {/* Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+            {/* Text Content */}
+            <div className="space-y-8">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
                 Your Health, Our
-                <span className="text-blue-200"> Priority</span>
+                <span className="block text-blue-200">Priority</span>
               </h1>
-              <p className="text-xl mb-8 text-blue-100">
+              <p className="text-xl text-blue-100 max-w-2xl">
                 Experience world-class healthcare with our state-of-the-art
                 facilities and expert medical professionals. Book your
-                appointment today.
+                appointment today and take the first step towards better health.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/appointments"
-                  className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-center"
+                  className="group bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 text-center"
                 >
                   Book Appointment
+                  <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
                 <Link
                   to="/doctors"
-                  className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
+                  className="group border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105 text-center"
                 >
-                  View Doctors
+                  Find Doctors
+                  <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
               </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t border-white/20">
+                <div>
+                  <div className="text-3xl font-bold">50+</div>
+                  <div className="text-blue-200">Specialists</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold">1000+</div>
+                  <div className="text-blue-200">Patients</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold">24/7</div>
+                  <div className="text-blue-200">Support</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold">15+</div>
+                  <div className="text-blue-200">Years</div>
+                </div>
+              </div>
             </div>
-            <div className="hidden lg:block">
-              <img
-                src="/placeholder.svg?height=400&width=500"
-                alt="Hospital Building"
-                className="rounded-lg shadow-2xl"
-              />
+
+            {/* Image Grid */}
+            <div className="hidden lg:block relative">
+              <div className="grid grid-cols-2 gap-4">
+                <img
+                  src={hospitalBuilding}
+                  alt="Medical Team"
+                  className="rounded-lg shadow-2xl transform -rotate-6 hover:rotate-0 transition-transform duration-500"
+                />
+                <img
+                  src={doctorPatient}
+                  alt="Healthcare Service"
+                  className="rounded-lg shadow-2xl transform translate-y-12 rotate-6 hover:rotate-0 transition-transform duration-500"
+                />
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob"></div>
+              <div className="absolute -top-4 -right-4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000"></div>
             </div>
           </div>
         </div>
