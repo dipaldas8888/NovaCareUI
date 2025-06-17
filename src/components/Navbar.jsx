@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import React from "react";
+
+import { useTheme } from "../context/ThemeProvider";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,8 +10,8 @@ const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const { darkMode, toggleDarkMode } = useTheme();
 
-  // Add scroll effect
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
@@ -54,7 +55,6 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-1">
-            {/* Navigation Links */}
             <NavLink to="/" isActive={isActive}>
               Home
             </NavLink>
@@ -63,11 +63,11 @@ const Navbar = () => {
             </NavLink>
             {isAuthenticated && (
               <>
-                <NavLink to="/patients" isActive={isActive}>
-                  Patients
+                <NavLink to="/contact" isActive={isActive}>
+                  International Enquiry
                 </NavLink>
                 <NavLink to="/appointments" isActive={isActive}>
-                  Appointments
+                  Book Appointment
                 </NavLink>
               </>
             )}
@@ -103,33 +103,12 @@ const Navbar = () => {
               </>
             )}
           </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 
-              transition-transform duration-200 transform hover:scale-110"
-            >
-              {/* ... existing SVG code ... */}
-            </button>
-          </div>
         </div>
-
-        {/* Mobile menu panel */}
-        {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/90 backdrop-blur-md rounded-lg shadow-lg mt-2">
-              {/* ... existing mobile menu items ... */}
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );
 };
 
-// Helper component for navigation links
 const NavLink = ({ to, children, isActive }) => (
   <Link
     to={to}

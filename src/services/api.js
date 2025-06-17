@@ -13,7 +13,7 @@ export const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 5000, // optional: helps catch hangs
+  timeout: 5000,
 });
 
 api.interceptors.request.use(
@@ -30,7 +30,10 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if (
+      error.response?.status === 401 &&
+      error.response.data.message === "Unauthorized"
+    ) {
       localStorage.removeItem("token");
       window.location.href = "/login";
     }
@@ -76,6 +79,9 @@ export const authAPI = {
     api.post("/api/auth/register-admin", userData, {
       params: { secret },
     }),
+};
+export const contactAPI = {
+  submitEnquiry: (enquiryData) => api.post("/api/contact", enquiryData),
 };
 
 export default api;

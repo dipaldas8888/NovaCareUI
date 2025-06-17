@@ -9,18 +9,13 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Enhanced Hero Section */}
       <section className="relative min-h-[90vh] flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white overflow-hidden">
-        {/* Background Pattern */}
         <div className="absolute inset-0 bg-grid-white/[0.2] bg-[size:20px_20px]"></div>
 
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/20"></div>
 
-        {/* Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Text Content */}
             <div className="space-y-8">
               <h1 className="text-5xl md:text-6xl font-bold leading-tight">
                 Your Health, Our
@@ -73,7 +68,6 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Image Grid */}
             <div className="hidden lg:block relative">
               <div className="grid grid-cols-2 gap-4">
                 <img
@@ -87,7 +81,7 @@ const Home = () => {
                   className="rounded-lg shadow-2xl transform translate-y-12 rotate-6 hover:rotate-0 transition-transform duration-500"
                 />
               </div>
-              {/* Decorative elements */}
+
               <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob"></div>
               <div className="absolute -top-4 -right-4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000"></div>
             </div>
