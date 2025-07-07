@@ -79,6 +79,8 @@ export const authAPI = {
     api.post("/api/auth/register-admin", userData, {
       params: { secret },
     }),
+  forgotPassword: (email) => api.post("/api/auth/forgot-password", { email }),
+  resetPassword: (data) => api.post("/api/auth/reset-password", data),
 };
 export const contactAPI = {
   submitEnquiry: (enquiryData) => api.post("/api/contact", enquiryData),

@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { authAPI } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ResetPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get token from URL query params
+  const [token, setToken] = useState("");
   const [form, setForm] = useState({
-    email: "",
-    otp: "",
     newPassword: "",
+    confirmPassword: "",
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const t = params.get("token");
+    if (t) setToken(t);
+    else setError("Invalid or missing reset token.");
+  }, [location.search]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +32,11 @@ const ResetPassword = () => {
     setError("");
     setLoading(true);
     try {
-      await authAPI.resetPassword(form);
+      await authAPI.resetPassword({
+        token,
+        newPassword: form.newPassword,
+        confirmPassword: form.confirmPassword,
+      });
       setSuccess(true);
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
@@ -39,51 +53,15 @@ const ResetPassword = () => {
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           Reset Password
         </h2>
+        {error && (
+          <div className="text-red-600 dark:text-red-400 mb-4">{error}</div>
+        )}
         {success ? (
           <div className="text-green-600 dark:text-green-400">
             Password reset successful! Redirecting to login...
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="text-red-600 dark:text-red-400">{error}</div>
-            )}
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Email Address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={form.email}
-                onChange={handleChange}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                placeholder="Enter your email"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="otp"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                OTP
-              </label>
-              <input
-                id="otp"
-                name="otp"
-                type="text"
-                required
-                value={form.otp}
-                onChange={handleChange}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-                placeholder="Enter the OTP sent to your email"
-              />
-            </div>
             <div>
               <label
                 htmlFor="newPassword"
@@ -100,6 +78,24 @@ const ResetPassword = () => {
                 onChange={handleChange}
                 className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                 placeholder="Enter your new password"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
+                Confirm Password
+              </label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                required
+                value={form.confirmPassword}
+                onChange={handleChange}
+                className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                placeholder="Confirm your new password"
               />
             </div>
             <button
