@@ -1,89 +1,47 @@
 import axios from "axios";
+import { auth } from "..firebase/lib/firebase";
 
-// export const api = axios.create({
-//   baseURL: "http://localhost:8080",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   withCredentials: true,
-// });
-
+// Base instance
 export const api = axios.create({
-  baseURL: "http://localhost:8080",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080",
+  headers: { "Content-Type": "application/json" },
+  timeout: 10000,
 });
 
+// Request: attach fresh Firebase ID token if present
 api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+  async (config) => {
+    const user = auth.currentUser;
+    if (user) {
+      // force refresh occasionally if you want: user.getIdToken(true)
+      const idToken = await user.getIdToken();
+      config.headers.Authorization = `Bearer ${idToken}`;
+    } else {
+      delete config.headers.Authorization;
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
+// Response: handle 401 by signing out (optional)
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (
-      error.response?.status === 401 &&
-      error.response.data.message === "Unauthorized"
-    ) {
-      localStorage.removeItem("token");
-      window.location.href = "/login";
+  (res) => res,
+  async (error) => {
+    if (error.response?.status === 401) {
+      // optional: try refreshing the token once
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const idToken = await user.getIdToken(true);
+          error.config.headers.Authorization = `Bearer ${idToken}`;
+          return api.request(error.config);
+        }
+      } catch (_) {}
+      // if still 401, sign out locally
+      // import { signOut } from "firebase/auth"; signOut(auth);
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
 );
-
-export const doctorAPI = {
-  getAll: () => api.get("/api/doctors"),
-  getById: (id) => api.get(`/api/doctors/${id}`),
-  getBySpecialization: (specialization) =>
-    api.get(`/api/doctors/specialization/${specialization}`),
-};
-
-export const patientAPI = {
-  create: (patientData) => api.post("/api/patients", patientData),
-  getAll: () => api.get("/api/patients"),
-  getById: (id) => api.get(`/api/patients/${id}`),
-  update: (id, patientData) => api.put(`/api/patients/${id}`, patientData),
-  delete: (id) => api.delete(`/api/patients/${id}`),
-};
-
-export const appointmentAPI = {
-  create: (appointmentData) => api.post("/api/appointments", appointmentData),
-  getAll: () => api.get("/api/appointments"),
-  getById: (id) => api.get(`/api/appointments/${id}`),
-  getByPatient: (patientId) =>
-    api.get(`/api/appointments/patient/${patientId}`),
-  getByDoctor: (doctorId) => api.get(`/api/appointments/doctor/${doctorId}`),
-  getDoctorAvailability: (doctorId, start, end) =>
-    api.get(`/api/appointments/doctor/${doctorId}/availability`, {
-      params: { start, end },
-    }),
-  update: (id, appointmentData) =>
-    api.put(`/api/appointments/${id}`, appointmentData),
-  cancel: (id) => api.delete(`/api/appointments/${id}`),
-};
-
-export const authAPI = {
-  login: (credentials) => api.post("/api/auth/login", credentials),
-  register: (userData) => api.post("/api/auth/register", userData),
-  registerAdmin: (userData, secret) =>
-    api.post("/api/auth/register-admin", userData, {
-      params: { secret },
-    }),
-  forgotPassword: (email) => api.post("/api/auth/forgot-password", { email }),
-  resetPassword: (data) => api.post("/api/auth/reset-password", data),
-};
-export const contactAPI = {
-  submitEnquiry: (enquiryData) => api.post("/api/contact", enquiryData),
-};
-
-export default api;
