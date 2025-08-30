@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "@/services/api";
-import { Card, CardContent } from "@/components/ui/card";
-import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Loader2, Mail, Phone, Clock, Stethoscope, Users } from "lucide-react";
 
 export default function DoctorDetails() {
   const { id } = useParams();
@@ -27,41 +25,123 @@ export default function DoctorDetails() {
   if (loading) {
     return (
       <div className="grid place-items-center h-60">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
       </div>
     );
   }
 
   if (!doctor) {
-    return <p className="text-center text-red-500">Doctor not found.</p>;
+    return (
+      <p className="text-center text-red-500 font-medium">Doctor not found.</p>
+    );
   }
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <Card className="max-w-2xl mx-auto">
-        <CardContent className="p-6 space-y-4">
-          <img
-            src={doctor.imageUrl}
-            alt={doctor.name}
-            className="w-full max-h-80 rounded-lg object-contain"
-          />
+    <div className="max-w-4xl mx-auto px-4 py-10">
+      <div className="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 rounded-xl p-8 mb-8 border border-zinc-800/50">
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="flex-1">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-xl flex items-center justify-center border border-zinc-800/50">
+                <img
+                  alt={doctor.name}
+                  className="w-16 h-16 rounded-full object-cover"
+                  src={doctor.imageUrl}
+                />
+              </div>
+              <div className="flex-1">
+                <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+                  {doctor.name}
+                </h1>
+                <p className="text-lg text-zinc-300 mb-3">
+                  {doctor.specialization}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-[#2CEE91] text-black text-xs font-medium rounded-full">
+                    Available
+                  </span>
+                  <span className="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-xs font-medium rounded-full border border-zinc-700/50">
+                    Max {doctor.maxPatientsPerDay} patients/day
+                  </span>
+                </div>
+              </div>
+            </div>
 
-          <h2 className="text-2xl font-bold">{doctor.name}</h2>
-          <p className="text-lg text-muted-foreground">
-            {doctor.specialization}
-          </p>
-          <p className="text-sm">📧 {doctor.email}</p>
-          <p className="text-sm">📞 {doctor.contactNumber}</p>
-          <p className="text-sm">🕒 {doctor.schedule}</p>
-          <p className="text-sm">
-            Max Patients / Day: {doctor.maxPatientsPerDay}
-          </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="flex items-center gap-3 p-3 bg-zinc-800/30 rounded-lg">
+                <Stethoscope className="w-4 h-4 text-[#2CEE91]" />
+                <div>
+                  <p className="text-xs text-zinc-500 uppercase tracking-wide">
+                    Specialization
+                  </p>
+                  <p className="text-sm text-white font-medium">
+                    {doctor.specialization}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-zinc-800/30 rounded-lg">
+                <Clock className="w-4 h-4 text-[#2CEE91]" />
+                <div>
+                  <p className="text-xs text-zinc-500 uppercase tracking-wide">
+                    Schedule
+                  </p>
+                  <p className="text-sm text-white font-medium">
+                    {doctor.schedule}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-zinc-800/30 rounded-lg">
+                <Users className="w-4 h-4 text-[#2CEE91]" />
+                <div>
+                  <p className="text-xs text-zinc-500 uppercase tracking-wide">
+                    Patients per Day
+                  </p>
+                  <p className="text-sm text-white font-medium">
+                    {doctor.maxPatientsPerDay}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <Button className="w-full bg-emerald-500 hover:bg-emerald-700 text-white">
-            Book Appointment
-          </Button>
-        </CardContent>
-      </Card>
+          <div className="lg:w-80 flex flex-col gap-4">
+            <div className="bg-zinc-800/30 rounded-lg p-6 text-center border border-zinc-700/50">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Mail className="w-5 h-5 text-[#2CEE91]" />
+                <span className="text-sm text-zinc-400 uppercase tracking-wide">
+                  Email
+                </span>
+              </div>
+              <p className="text-white font-medium">{doctor.email}</p>
+            </div>
+            <div className="bg-zinc-800/30 rounded-lg p-6 text-center border border-zinc-700/50">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Phone className="w-5 h-5 text-[#2CEE91]" />
+                <span className="text-sm text-zinc-400 uppercase tracking-wide">
+                  Contact
+                </span>
+              </div>
+              <p className="text-white font-medium">{doctor.contactNumber}</p>
+            </div>
+            <button className="bg-gradient-to-r from-[#2CEE91] to-[#00a86b] text-black font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-[#2CEE91]/25 transition-all duration-300">
+              Book Appointment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 rounded-xl p-8 border border-zinc-800/50">
+        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <div className="w-1 h-6 bg-gradient-to-b from-[#2CEE91] to-[#00a86b] rounded-full"></div>
+          About Doctor
+        </h2>
+        <p className="text-zinc-400">
+          Dr. {doctor.name} is a highly skilled specialist in{" "}
+          {doctor.specialization}, with experience handling{" "}
+          {doctor.maxPatientsPerDay}+ patients daily. Available during{" "}
+          {doctor.schedule}.
+        </p>
+      </div>
     </div>
   );
 }
