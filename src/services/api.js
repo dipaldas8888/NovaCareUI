@@ -1,5 +1,5 @@
 import axios from "axios";
-import { auth } from "..firebase/lib/firebase";
+import { auth } from "../lib/firebase";
 
 // Base instance
 export const api = axios.create({

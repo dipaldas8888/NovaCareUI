@@ -3,18 +3,18 @@ import { AuthProvider } from "./context/AuthContext";
 import { AppProvider } from "./context/AppContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
-import InternationalEnquiry from "./pages/InternationalEnquiry";
-import Appointments from "./pages/Appointments";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ProtectedRoute from "./components/ProtectedRoute";
+
 import { ThemeProvider } from "./context/ThemeProvider";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
+
+import Homes from "./pages/Homes";
+import Specialties from "./pages/Specialties";
+import DoctorsList from "./pages/DoctorsList";
+import DoctorDetails from "./pages/DoctorDetails";
 
 import "./App.css";
+import DoctorRegister from "./pages/DoctorRegister";
+import PatientRegister from "./pages/PatientRegister";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -22,32 +22,18 @@ function App() {
       <AuthProvider>
         <AppProvider>
           <Router>
-            <div className="min-h-screen flex flex-col bg-gray-50">
+            <div className="min-h-screen flex flex-col ">
               <Navbar />
               <main className="flex-grow pt-16">
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/doctors" element={<Doctors />} />
+                  <Route path="/" element={<Homes />} />
+
+                  <Route path="/drregister" element={<DoctorRegister />} />
+                  <Route path="/register" element={<PatientRegister />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route
-                    path="/Contact"
-                    element={
-                      <ProtectedRoute>
-                        <InternationalEnquiry />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/appointments"
-                    element={
-                      <ProtectedRoute>
-                        <Appointments />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="/specialties" element={<Specialties />} />
+                  <Route path="/doctors" element={<DoctorsList />} />
+                  <Route path="/doctors/:id" element={<DoctorDetails />} />
                 </Routes>
               </main>
               <Footer />
