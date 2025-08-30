@@ -41,11 +41,12 @@ export default function DoctorDetails() {
       <div className="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 rounded-xl p-8 mb-8 border border-zinc-800/50">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-xl flex items-center justify-center border border-zinc-800/50">
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Doctor Image */}
+              <div className="w-full md:w-64 h-64 rounded-xl overflow-hidden border border-zinc-800/50">
                 <img
                   alt={doctor.name}
-                  className="w-16 h-16 rounded-full object-cover"
+                  className="w-full h-full object-cover"
                   src={doctor.imageUrl}
                 />
               </div>
