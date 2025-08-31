@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { api } from "@/services/api";
 import { Loader2, Mail, Phone, Clock, Stethoscope, Users } from "lucide-react";
 
@@ -42,7 +42,6 @@ export default function DoctorDetails() {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">
             <div className="flex flex-col lg:flex-row gap-8">
-              {/* Doctor Image */}
               <div className="w-full md:w-64 h-64 rounded-xl overflow-hidden border border-zinc-800/50">
                 <img
                   alt={doctor.name}
@@ -124,9 +123,12 @@ export default function DoctorDetails() {
               </div>
               <p className="text-white font-medium">{doctor.contactNumber}</p>
             </div>
-            <button className="bg-gradient-to-r from-[#2CEE91] to-[#00a86b] text-black font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-[#2CEE91]/25 transition-all duration-300">
+            <Link
+              to={`/doctors/${doctor.id}/book`}
+              className="bg-gradient-to-r from-[#2CEE91] to-[#00a86b] text-black font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-[#2CEE91]/25 transition-all duration-300"
+            >
               Book Appointment
-            </button>
+            </Link>
           </div>
         </div>
       </div>

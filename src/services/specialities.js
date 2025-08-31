@@ -13,8 +13,8 @@ export const SPECIALTIES = [
   { name: "Neurosciences", slug: "neurosciences", icon: "/icons/brain.svg" },
   { name: "Renal Sciences", slug: "renal-sciences", icon: "/icons/kidney.svg" },
   {
-    name: "Maa Kauvery (Women and Child Health)",
-    slug: "women-child-health",
+    name: "Medicine",
+    slug: "medicine",
     icon: "/icons/mom-baby.svg",
   },
   { name: "Pulmonology", slug: "pulmonology", icon: "/icons/lungs.svg" },

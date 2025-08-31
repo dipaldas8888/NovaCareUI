@@ -15,6 +15,7 @@ import "./App.css";
 import DoctorRegister from "./pages/DoctorRegister";
 import PatientRegister from "./pages/PatientRegister";
 import Login from "./pages/Login";
+import AppointmentForm from "./pages/AppointmentForm";
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
                   <Route path="/specialties" element={<Specialties />} />
                   <Route path="/doctors" element={<DoctorsList />} />
                   <Route path="/doctors/:id" element={<DoctorDetails />} />
+                  <Route
+                    path="/doctors/:id/book"
+                    element={<AppointmentForm />}
+                  />
                 </Routes>
               </main>
               <Footer />
