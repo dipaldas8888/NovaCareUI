@@ -19,6 +19,7 @@ import AppointmentForm from "./pages/AppointmentForm";
 import BlogList from "./pages/BlogList";
 import BlogDetails from "./pages/BlogDetails";
 import AboutUs from "./pages/AboutUs";
+import ProtectedRoute from "./context/ProtectedRoute";
 
 function App() {
   return (
@@ -40,7 +41,11 @@ function App() {
                   <Route path="/doctors/:id" element={<DoctorDetails />} />
                   <Route
                     path="/doctors/:id/book"
-                    element={<AppointmentForm />}
+                    element={
+                      <ProtectedRoute>
+                        <AppointmentForm />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route path="/blogs" element={<BlogList />} />
                   <Route path="/blog/:id" element={<BlogDetails />} />

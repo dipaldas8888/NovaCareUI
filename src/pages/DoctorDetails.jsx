@@ -13,6 +13,7 @@ export default function DoctorDetails() {
       try {
         setLoading(true);
         const { data } = await api.get(`/api/doctors/${id}`);
+        console.log("Doctor details:", data);
         setDoctor(data);
       } catch (err) {
         console.error("Error fetching doctor details", err);
@@ -83,10 +84,10 @@ export default function DoctorDetails() {
                 <Clock className="w-4 h-4 text-[#2CEE91]" />
                 <div>
                   <p className="text-xs text-zinc-500 uppercase tracking-wide">
-                    Schedule
+                    Experience
                   </p>
                   <p className="text-sm text-white font-medium">
-                    {doctor.schedule}
+                    {doctor.experience}
                   </p>
                 </div>
               </div>
@@ -94,10 +95,10 @@ export default function DoctorDetails() {
                 <Users className="w-4 h-4 text-[#2CEE91]" />
                 <div>
                   <p className="text-xs text-zinc-500 uppercase tracking-wide">
-                    Patients per Day
+                    Qualification
                   </p>
                   <p className="text-sm text-white font-medium">
-                    {doctor.maxPatientsPerDay}
+                    {doctor.qualification}
                   </p>
                 </div>
               </div>
@@ -114,15 +115,7 @@ export default function DoctorDetails() {
               </div>
               <p className="text-white font-medium">{doctor.email}</p>
             </div>
-            <div className="bg-zinc-800/30 rounded-lg p-6 text-center border border-zinc-700/50">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <Phone className="w-5 h-5 text-[#2CEE91]" />
-                <span className="text-sm text-zinc-400 uppercase tracking-wide">
-                  Contact
-                </span>
-              </div>
-              <p className="text-white font-medium">{doctor.contactNumber}</p>
-            </div>
+
             <Link
               to={`/doctors/${doctor.id}/book`}
               className="bg-gradient-to-r from-[#2CEE91] to-[#00a86b] text-black font-semibold py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-[#2CEE91]/25 transition-all duration-300"
@@ -138,12 +131,7 @@ export default function DoctorDetails() {
           <div className="w-1 h-6 bg-gradient-to-b from-[#2CEE91] to-[#00a86b] rounded-full"></div>
           About Doctor
         </h2>
-        <p className="text-zinc-400">
-          Dr. {doctor.name} is a highly skilled specialist in{" "}
-          {doctor.specialization}, with experience handling{" "}
-          {doctor.maxPatientsPerDay}+ patients daily. Available during{" "}
-          {doctor.schedule}.
-        </p>
+        <p className="text-zinc-400">{doctor.profileInfo}</p>
       </div>
     </div>
   );

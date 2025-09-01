@@ -77,36 +77,8 @@ export default function RegisterDarkMotion() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
           >
-            Sign up to book appointments and consult doctors online
+            Sign up to book appointments
           </motion.p>
-
-          <motion.button
-            type="button"
-            className="mt-8 flex h-12 w-full items-center justify-center rounded-full bg-neutral-800/70 transition-colors hover:bg-neutral-800"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
-          >
-            <img
-              src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/googleLogo.svg"
-              alt="Google"
-            />
-          </motion.button>
-
-          <motion.div
-            className="my-5 flex w-full items-center gap-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            <div className="w-full border-t border-neutral-800" />
-            <p className="w-full text-nowrap text-sm text-neutral-400">
-              or sign up with email
-            </p>
-            <div className="w-full border-t border-neutral-800" />
-          </motion.div>
 
           <motion.div
             className="flex h-12 w-full items-center gap-2 overflow-hidden rounded-full border border-neutral-800 bg-transparent pl-6"
@@ -202,21 +174,7 @@ export default function RegisterDarkMotion() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.4 }}
-          >
-            <div className="flex items-center gap-2">
-              <input
-                className="h-5 w-5 accent-indigo-500"
-                type="checkbox"
-                id="checkbox"
-              />
-              <label className="text-sm" htmlFor="checkbox">
-                Remember me
-              </label>
-            </div>
-            <a className="text-sm underline hover:text-neutral-200" href="#">
-              Forgot password?
-            </a>
-          </motion.div>
+          ></motion.div>
 
           {/* Submit */}
           <motion.button
