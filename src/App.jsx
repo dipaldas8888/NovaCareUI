@@ -16,6 +16,9 @@ import DoctorRegister from "./pages/DoctorRegister";
 import PatientRegister from "./pages/PatientRegister";
 import Login from "./pages/Login";
 import AppointmentForm from "./pages/AppointmentForm";
+import BlogList from "./pages/BlogList";
+import BlogDetails from "./pages/BlogDetails";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -39,6 +42,9 @@ function App() {
                     path="/doctors/:id/book"
                     element={<AppointmentForm />}
                   />
+                  <Route path="/blogs" element={<BlogList />} />
+                  <Route path="/blog/:id" element={<BlogDetails />} />
+                  <Route path="/about" element={<AboutUs />} />
                 </Routes>
               </main>
               <Footer />

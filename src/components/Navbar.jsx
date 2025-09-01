@@ -21,7 +21,6 @@ export default function Navbar() {
     { label: "Our Doctors", to: "/specialties" },
     { label: "Careers", to: "/careers" },
     { label: "Blogs", to: "/blogs" },
-    { label: "Contact Us", to: "/contact" },
   ];
 
   return (
@@ -29,10 +28,9 @@ export default function Navbar() {
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold">
-          🏥 MyHospital
+          Novacare
         </Link>
 
-        {/* Desktop links */}
         <div className="hidden lg:flex items-center gap-6">
           <Link to="/" className="hover:text-pink-400">
             Home
@@ -42,9 +40,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Right side buttons + drawer */}
         <div className="flex items-center gap-3">
-          {/* Desktop buttons */}
           <div className="hidden md:flex items-center gap-3">
             {!isAuthenticated ? (
               <Button
@@ -64,7 +60,6 @@ export default function Navbar() {
             </Button>
           </div>
 
-          {/* Mobile menu (Sheet) */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <button aria-label="Open menu">
@@ -75,13 +70,11 @@ export default function Navbar() {
               side="right"
               className="bg-neutral-900 text-white p-6 w-80 sm:w-96"
             >
-              {/* ✅ Required for accessibility */}
               <SheetHeader>
                 <SheetTitle></SheetTitle>
                 <SheetDescription></SheetDescription>
               </SheetHeader>
 
-              {/* Top row with title + close button */}
               <div className="mt-4 mb-6 flex items-center justify-between">
                 <h2 className="text-lg font-bold">Menu</h2>
                 <button
@@ -90,7 +83,6 @@ export default function Navbar() {
                 ></button>
               </div>
 
-              {/* Navigation links */}
               <ul className="space-y-4">
                 <li>
                   <Link
@@ -123,7 +115,6 @@ export default function Navbar() {
                 ))}
               </ul>
 
-              {/* Auth buttons in drawer */}
               <div className="mt-6 flex flex-col gap-3">
                 {!isAuthenticated ? (
                   <Button

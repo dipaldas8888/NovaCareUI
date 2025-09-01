@@ -46,7 +46,6 @@ export default function DoctorsList() {
               key={d.id}
               className="bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 rounded-xl border border-zinc-800/50 overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
             >
-              {/* Image */}
               <div className="h-48 w-full overflow-hidden">
                 <img
                   src={d.imageUrl || "/placeholder.svg"}
@@ -55,7 +54,6 @@ export default function DoctorsList() {
                 />
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-white mb-1">
                   {d.name}

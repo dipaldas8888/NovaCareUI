@@ -1,42 +1,28 @@
+import {
+  Heart,
+  Brain,
+  Stethoscope,
+  Activity,
+  Pill,
+  Baby,
+  Syringe,
+  Ambulance,
+  Bone,
+} from "lucide-react";
+
 export const SPECIALTIES = [
-  {
-    name: "Cardiology",
-    slug: "cardiology",
-    icon: "/icons/heart.svg",
-  },
-  { name: "Bone and Joint", slug: "bone-and-joint", icon: "/icons/bone.svg" },
-  {
-    name: "Gastrointestinal Sciences",
-    slug: "gastrointestinal-sciences",
-    icon: "/icons/stomach.svg",
-  },
-  { name: "Neurosciences", slug: "neurosciences", icon: "/icons/brain.svg" },
-  { name: "Renal Sciences", slug: "renal-sciences", icon: "/icons/kidney.svg" },
-  {
-    name: "Medicine",
-    slug: "medicine",
-    icon: "/icons/mom-baby.svg",
-  },
-  { name: "Pulmonology", slug: "pulmonology", icon: "/icons/lungs.svg" },
+  { name: "Cardiology", slug: "cardiology", icon: Heart },
+  { name: "Neurosciences", slug: "neurosciences", icon: Brain },
+  { name: "Medicine", slug: "medicine", icon: Stethoscope },
+  { name: "Pulmonology", slug: "pulmonology", icon: Activity }, // ❌ no Lung, so use Activity
+  { name: "Critical Care", slug: "critical-care", icon: Activity },
+  { name: "Internal Medicine", slug: "internal-medicine", icon: Pill },
+  { name: "IVF and Infertility", slug: "ivf-infertility", icon: Baby },
+  { name: "Anaesthesiology", slug: "anaesthesiology", icon: Syringe },
   {
     name: "Accident and Emergency Care",
     slug: "emergency-care",
-    icon: "/icons/ambulance.svg",
+    icon: Ambulance,
   },
-  { name: "Critical Care", slug: "critical-care", icon: "/icons/monitor.svg" },
-  {
-    name: "Internal Medicine",
-    slug: "internal-medicine",
-    icon: "/icons/pill-bottle.svg",
-  },
-  {
-    name: "IVF and Infertility",
-    slug: "ivf-infertility",
-    icon: "/icons/ivf.svg",
-  },
-  {
-    name: "Anaesthesiology",
-    slug: "anaesthesiology",
-    icon: "/icons/anesthesia.svg",
-  },
+  { name: "Bone and Joint", slug: "bone-and-joint", icon: Bone }, // ✅ "Bone" exists
 ];

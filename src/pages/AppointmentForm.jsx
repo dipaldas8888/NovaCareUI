@@ -6,14 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
-import { format } from "date-fns";
 
 export default function AppointmentForm() {
-  const { id } = useParams(); // doctorId from URL (e.g., /doctors/5/book)
+  const { id } = useParams();
   const [form, setForm] = useState({
     appointmentDateTime: "",
     notes: "",
     type: "Normal",
+    patientName: "",
+    patientMobile: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -26,22 +27,36 @@ export default function AppointmentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
     try {
+      console.log("Submitting form:", form);
+      setLoading(true);
       await api.post("/api/appointments", {
         doctorId: parseInt(id),
-        appointmentDateTime: form.appointmentDateTime,
+
+        appointmentDateTime: new Date(form.appointmentDateTime)
+          .toISOString()
+          .slice(0, 19),
         notes: form.notes,
         type: form.type,
+        patientName: form.patientName,
+        patientMobile: form.patientMobile,
       });
+
+      setForm({
+        patientName: "",
+        patientMobile: "",
+        appointmentDateTime: "",
+        notes: "",
+        type: "Normal",
+      });
+
       setSuccess("Appointment booked successfully!");
-      setForm({ appointmentDateTime: "", notes: "", type: "Normal" });
+
+      setTimeout(() => {
+        setSuccess("");
+      }, 3000);
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Failed to book appointment.");
     } finally {
       setLoading(false);
     }
@@ -52,6 +67,28 @@ export default function AppointmentForm() {
       <h2 className="text-2xl font-bold text-white mb-6">Book Appointment</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="patientName">Full Name</Label>
+          <Input
+            id="patientName"
+            type="text"
+            value={form.patientName}
+            onChange={(e) => setForm({ ...form, patientName: e.target.value })}
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="patientMobile">Mobile Number</Label>
+          <Input
+            id="patientMobile"
+            type="tel"
+            value={form.patientMobile}
+            onChange={(e) =>
+              setForm({ ...form, patientMobile: e.target.value })
+            }
+            required
+          />
+        </div>
         <div className="space-y-2">
           <Label htmlFor="appointmentDateTime" className="text-white">
             Appointment Date & Time
