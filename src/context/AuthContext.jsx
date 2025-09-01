@@ -26,19 +26,16 @@ export const useAuth = () => {
 };
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); // Firebase user object
-  const [loading, setLoading] = useState(true); // while attaching listener
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Keep React state in sync with Firebase auth state
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       setUser(fbUser || null);
       setLoading(false);
     });
     return () => unsub();
   }, []);
-
-  // ----- Core auth actions -----
 
   const login = async ({ email, password }) => {
     try {
@@ -51,12 +48,9 @@ export function AuthProvider({ children }) {
 
   const registerPatient = async ({ username, email, password }) => {
     try {
-      // 1) Create Firebase user
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       if (username) await updateProfile(cred.user, { displayName: username });
 
-      // 2) OPTIONAL: create patient profile in your Spring Boot backend
-      // The axios interceptor will send Bearer <FirebaseIDToken>
       await api.post("/api/patients", { username, email, uid: cred.user.uid });
 
       return { success: true };
@@ -87,8 +81,7 @@ export function AuthProvider({ children }) {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      // OPTIONAL: after first login, ensure profile exists in backend
-      // await api.post("/api/users/sync", { uid: auth.currentUser.uid, email: auth.currentUser.email });
+
       return { success: true };
     } catch (error) {
       return { success: false, error: parseFirebaseError(error) };
@@ -101,8 +94,8 @@ export function AuthProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      user, // Firebase user or null
-      loading, // boolean: auth state resolving
+      user,
+      loading,
       isAuthenticated: !!user,
       login,
       logout,
@@ -118,7 +111,6 @@ export function AuthProvider({ children }) {
 
 function parseFirebaseError(error) {
   const msg = error?.code || error?.message || "Authentication error";
-  // Optional: map common codes to user-friendly messages
   const map = {
     "auth/invalid-email": "Invalid email address.",
     "auth/user-not-found": "No account found for this email.",
