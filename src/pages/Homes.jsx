@@ -58,14 +58,14 @@ export default function Homes() {
                 className="mt-6 flex gap-4 items-center mx-1"
               >
                 {/* Buttons with micro-interactions */}
-                <Link to="/login">
+                <Link to="/specialties">
                   <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
                     <Button className="bg-emerald-500 hover:bg-emerald-800 md:h-10">
                       Get Started
                     </Button>
                   </motion.div>
                 </Link>
-                <Link to="/get-started">
+                <Link to="/about">
                   <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
                     <Button variant="outline" className="md:h-10">
                       Learn More

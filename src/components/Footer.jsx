@@ -15,7 +15,7 @@ const Footer = () => {
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">H</span>
               </div>
-              <span className="text-xl font-bold">NovaCare Hospital</span>
+              <span className="text-xl font-bold">NovaCare</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               Providing exceptional healthcare services with cutting-edge
@@ -74,7 +74,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/doctors"
+                  to="/specialties"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
                   Our Doctors
@@ -82,10 +82,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/appointments"
+                  to="/blogs"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Book Appointment
+                  Blogs
                 </Link>
               </li>
               <li>
@@ -122,7 +122,7 @@ const Footer = () => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                Electronic City, Bangalore, India
+                Electronic City, India
               </p>
               <p className="flex items-center">
                 <svg
@@ -138,7 +138,7 @@ const Footer = () => {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                +919101408092
+                +9134567897
               </p>
               <p className="flex items-center">
                 <svg
@@ -165,8 +165,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
           <p>
-            &copy; {new Date().getFullYear()} NovaCare Hospital. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} NovaCare. All rights reserved.
           </p>
         </div>
       </div>

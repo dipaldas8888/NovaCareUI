@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Mail, Lock, ArrowRight } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 export default function Login() {
   const { login, googleLogin } = useAuth();
@@ -23,22 +23,34 @@ export default function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!form.email || !form.password) {
-      toast("Missing info", {
-        description: "Please enter email and password.",
-      });
+      toast.error("Please fill in all fields.");
       return;
     }
     try {
       setLoadingEmail(true);
       const res = await login({ email: form.email, password: form.password });
+
       if (res.success) {
-        toast("Welcome back!", { description: "Logged in successfully." });
+        toast.success("Welcome back!", {
+          description: "Logged in successfully.",
+        });
 
         const redirectTo = location.state?.from || "/";
         navigate(redirectTo, { replace: true });
       } else {
-        toast.error("Login failed", { description: res.error });
+        toast.error("Login failed", {
+          description: res.error || "Invalid credentials.",
+        });
       }
+    } catch (err) {
+      console.error("[LOGIN ERROR]", err);
+
+      const msg =
+        err?.response?.data?.message ||
+        err?.code ||
+        err?.message ||
+        "Login failed.";
+      toast.error("Login failed", { description: msg });
     } finally {
       setLoadingEmail(false);
     }

@@ -31,6 +31,20 @@ export default function AppointmentForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "appointmentDateTime") {
+      const selected = new Date(value);
+      const hours = selected.getHours();
+
+      // Restrict hours between 9 AM and 6 PM
+      if (hours < 9 || hours >= 18) {
+        setError("Appointments can only be booked between 9:00 AM and 6:00 PM");
+        return;
+      } else {
+        setError(null);
+      }
+    }
+
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -181,6 +195,7 @@ export default function AppointmentForm() {
                   value={form.appointmentDateTime}
                   onChange={handleChange}
                   required
+                  min={new Date().toISOString().slice(0, 16)} // ⬅️ only future
                   className="w-full px-4 py-2.5 bg-zinc-800 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/40 outline-none"
                 />
               </div>

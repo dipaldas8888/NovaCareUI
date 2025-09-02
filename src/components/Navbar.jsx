@@ -24,10 +24,7 @@ export default function Navbar() {
   return (
     <nav className="bg-neutral-950 text-white shadow-md border-b border-neutral-800 sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <Link
-          to="/"
-          className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-400 via-pink-500 to-emerald-400 bg-clip-text text-transparent hover:opacity-90 transition"
-        >
+        <Link to="/" className="hover:opacity-90 transition">
           <img src={logo} alt="Novacare Logo" className="h-10 w-auto" />
         </Link>
 
@@ -48,13 +45,21 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-3">
           {!isAuthenticated ? (
-            <Button
-              asChild
-              variant="outline"
-              className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 transition rounded-lg"
-            >
-              <Link to="/login">Login</Link>
-            </Button>
+            <>
+              <Button
+                asChild
+                variant="outline"
+                className="border-emerald-500 text-emerald-400 hover:bg-emerald-500/10 transition rounded-lg"
+              >
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button
+                className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 rounded-lg font-semibold shadow-md"
+                asChild
+              >
+                <Link to="/register">Get Started</Link>
+              </Button>
+            </>
           ) : (
             <Button
               onClick={logout}
@@ -64,19 +69,13 @@ export default function Navbar() {
               Logout
             </Button>
           )}
-          <Button
-            className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 rounded-lg font-semibold shadow-md"
-            asChild
-          >
-            <Link to="/register">Get Started</Link>
-          </Button>
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button
               aria-label="Open menu"
-              className="lg:hidden p-2 rounded-md hover:bg-neutral-800 transition"
+              className="p-2 rounded-md hover:bg-neutral-800 transition"
             >
               <Menu className="h-6 w-6 text-emerald-400" />
             </button>
@@ -107,15 +106,7 @@ export default function Navbar() {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/specialties"
-                  className="block hover:text-emerald-400 transition"
-                  onClick={() => setOpen(false)}
-                >
-                  Our Specialties
-                </Link>
-              </li>
+
               {drawerLinks.map((l) => (
                 <li key={l.to}>
                   <Link
@@ -131,14 +122,24 @@ export default function Navbar() {
 
             <div className="mt-10 flex flex-col gap-4">
               {!isAuthenticated ? (
-                <Button
-                  asChild
-                  className="border border-emerald-500 text-emerald-400 bg-transparent hover:bg-emerald-500/10 rounded-lg"
-                >
-                  <Link to="/login" onClick={() => setOpen(false)}>
-                    Login
-                  </Link>
-                </Button>
+                <>
+                  <Button
+                    asChild
+                    className="border border-emerald-500 text-emerald-400 bg-transparent hover:bg-emerald-500/10 rounded-lg"
+                  >
+                    <Link to="/login" onClick={() => setOpen(false)}>
+                      Login
+                    </Link>
+                  </Button>
+                  <Button
+                    className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 rounded-lg font-semibold shadow-md"
+                    asChild
+                  >
+                    <Link to="/register" onClick={() => setOpen(false)}>
+                      Get Started
+                    </Link>
+                  </Button>
+                </>
               ) : (
                 <Button
                   onClick={() => {
@@ -151,15 +152,6 @@ export default function Navbar() {
                   Logout
                 </Button>
               )}
-
-              <Button
-                className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 rounded-lg font-semibold shadow-md"
-                asChild
-              >
-                <Link to="/register" onClick={() => setOpen(false)}>
-                  Get Started
-                </Link>
-              </Button>
             </div>
           </SheetContent>
         </Sheet>

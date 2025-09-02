@@ -61,9 +61,6 @@ export default function DoctorDetails() {
                   <span className="px-3 py-1 bg-[#2CEE91] text-black text-xs font-medium rounded-full">
                     Available
                   </span>
-                  <span className="px-3 py-1 bg-zinc-800/50 text-zinc-300 text-xs font-medium rounded-full border border-zinc-700/50">
-                    Max {doctor.maxPatientsPerDay} patients/day
-                  </span>
                 </div>
               </div>
             </div>

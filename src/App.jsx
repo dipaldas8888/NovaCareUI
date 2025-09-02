@@ -3,6 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { AppProvider } from "./context/AppContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Toaster } from "react-hot-toast";
 
 import { ThemeProvider } from "./context/ThemeProvider";
 
@@ -29,6 +30,8 @@ function App() {
           <Router>
             <div className="min-h-screen flex flex-col ">
               <Navbar />
+              <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+
               <main className="flex-grow pt-16">
                 <Routes>
                   <Route path="/" element={<Homes />} />

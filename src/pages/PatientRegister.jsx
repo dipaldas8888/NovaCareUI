@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { api } from "@/services/api";
-import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { toast } from "react-hot-toast";
 
-export default function RegisterDarkMotion() {
+export default function PatientRegister() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -22,14 +22,14 @@ export default function RegisterDarkMotion() {
     try {
       setLoading(true);
       await api.post("/api/auth/register", form);
-      toast("Registered!", {
-        description: "Patient account created successfully.",
-      });
+      toast.success("Registration successful! Please log in.");
       navigate("/login");
     } catch (err) {
+      console.error("[REGISTER ERROR]", err);
+
       const msg =
-        err?.response?.data?.message || err.message || "Registration failed";
-      toast.error("Error", { description: msg });
+        err?.response?.data?.message || err?.message || "Registration failed.";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
