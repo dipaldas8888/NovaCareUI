@@ -4,26 +4,16 @@ import { ChevronDown, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-/**
- * Framer Motion basics used below:
- * - motion.div: animated <div>
- * - initial: starting style before animation
- * - animate: target style after animation
- * - transition: how it moves between them (duration/ease/delay)
- * - AnimatePresence: animates components as they mount/unmount (for collapses/modals)
- */
-
 function FAQItem({ question, answer, index }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // Fade & slide each card in with a stagger using the index
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.15, ease: "easeOut" }}
       className={cn(
-        "group border-border/60 rounded-lg border",
+        "group border-border/10 rounded-lg border",
         "transition-all duration-200 ease-in-out",
         isOpen ? "bg-card/30 shadow-sm" : "hover:bg-card/50"
       )}
@@ -151,7 +141,7 @@ export default function FAQ() {
             Frequently Asked Questions
           </h2>
           <p className="text-muted-foreground text-sm">
-            Everything you need to know about MVPBlocks
+            Everything you need to know about our services
           </p>
         </motion.div>
 

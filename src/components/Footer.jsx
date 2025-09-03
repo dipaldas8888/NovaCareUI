@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-background text-white border-1">
+    <footer className="bg-neutral-900 text-white border-0">
       {/* <div className="flex min-h-svh flex-col items-center justify-center">
         <Button>Click me</Button>
       </div> */}

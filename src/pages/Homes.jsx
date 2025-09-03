@@ -29,8 +29,8 @@ const item = {
 
 export default function Homes() {
   return (
-    <div className="bg-background">
-      <section className="relative overflow-hidden py-14">
+    <div className="bg-neutral-900 text-white">
+      <section className="relative overflow-hidden py-0">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <motion.div variants={container} initial="hidden" animate="show">

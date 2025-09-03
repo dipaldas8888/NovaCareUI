@@ -36,7 +36,6 @@ export default function AppointmentForm() {
       const selected = new Date(value);
       const hours = selected.getHours();
 
-      // Restrict hours between 9 AM and 6 PM
       if (hours < 9 || hours >= 18) {
         setError("Appointments can only be booked between 9:00 AM and 6:00 PM");
         return;

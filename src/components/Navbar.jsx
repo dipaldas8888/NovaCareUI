@@ -22,8 +22,8 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-neutral-950 text-white shadow-md border-b border-neutral-800 sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+    <nav className="bg-neutral-900 text-white shadow-md border-b border-neutral-800 sticky top-0 z-50">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link to="/" className="hover:opacity-90 transition">
           <img src={logo} alt="Novacare Logo" className="h-10 w-auto" />
         </Link>

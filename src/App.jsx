@@ -32,7 +32,7 @@ function App() {
               <Navbar />
               <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
-              <main className="flex-grow pt-16">
+              <main className="flex-grow">
                 <Routes>
                   <Route path="/" element={<Homes />} />
 
