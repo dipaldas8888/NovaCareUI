@@ -33,9 +33,6 @@ api.interceptors.response.use(
           return api.request(error.config);
         }
       } catch (_) {}
-      // if still 401, sign out locally
-      // import { signOut } from "firebase/auth"; signOut(auth);
-      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
