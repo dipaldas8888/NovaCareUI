@@ -1,19 +1,16 @@
 import axios from "axios";
 import { auth } from "../lib/firebase";
 
-// Base instance
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080",
   headers: { "Content-Type": "application/json" },
   timeout: 10000,
 });
 
-// Request: attach fresh Firebase ID token if present
 api.interceptors.request.use(
   async (config) => {
     const user = auth.currentUser;
     if (user) {
-      // force refresh occasionally if you want: user.getIdToken(true)
       const idToken = await user.getIdToken();
       config.headers.Authorization = `Bearer ${idToken}`;
     } else {
@@ -24,12 +21,10 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response: handle 401 by signing out (optional)
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
     if (error.response?.status === 401) {
-      // optional: try refreshing the token once
       try {
         const user = auth.currentUser;
         if (user) {
